@@ -3,19 +3,19 @@ export const siteConfig = {
   title: "Someone's Portfolio",
   description: "A showcase of my work and thoughts",
   social: {
-    github: "https://github.com/tomcomtang/astro-multiplepage-portfolio",
-    twitter: "https://x.com/astrodotbuild",
+    github: "https://github.com/VinaiGreat",
+    // twitter: "https://x.com/astrodotbuild",
     email: "mailto:364786053@qq.com",
   },
 };
 
 export const homeContent = {
-  title: "Hello, I'm Your Name",
+  title: "Bonjour, Je suis Xavier L.",
   description:
-    "A passionate frontend developer with a keen eye for design and a love for creating beautiful, functional web experiences.",
+    "Infographiste et web designer autonome, titulaire d'une licence en CDUI, je crée des expériences visuelles cohérentes et des interfaces soignées, tout en construisant progressivement mes compétences en développement d'applications.",
   buttons: {
     about: {
-      text: "View About",
+      text: "À propos",
       href: "/about/",
     },
     posts: {
@@ -31,13 +31,15 @@ export const homeContent = {
 
 export const aboutContent = {
   meta: {
-    title: "About - Your Portfolio",
-    description: "Learn more about my background, skills, and experience",
+    title: "À propos de moi",
+    description: "Découvrez mon parcours, mes compétences et mon expérience",
   },
-  title: "About Me",
+  title: "À propos de moi",
   description:
-    "This is where you can introduce yourself or your company. Share your story, mission, and values. Explain what makes you unique and why people should be interested in your work. Keep it concise but engaging.",
+    "Infographiste et web designer autonome, titulaire d’une licence en CDUI, je crée des expériences visuelles cohérentes et des interfaces soignées tout en développant progressivement mes compétences en développement d’applications. Ma mission est d’allier esthétique et ergonomie pour concevoir des produits numériques à la fois beaux, clairs et utilisables. Ce qui me rend unique, c’est cette double sensibilité design/technique et mon attention constante à la hiérarchie visuelle, à la typographie et à l’accessibilité. Si mon travail peut vous intéresser, c’est parce que chaque projet est abordé avec curiosité, rigueur et une vraie volonté d’avoir un impact concret sur l’usage et la perception de votre produit numérique.",
   skills: [
+    "HTML",
+    "CSS",
     "Next.js",
     "React",
     "TypeScript",
@@ -45,41 +47,34 @@ export const aboutContent = {
     "Node.js",
     "Docker",
     "Git",
-    "AWS",
   ],
   image: {
     src: "/assets/images/about/coder.jpg",
     alt: "Profile",
   },
   experience: {
-    title: "Experience",
+    title: "Mon expérience",
     items: [
       {
-        period: "2022 - Present",
-        position: "Senior Frontend Developer",
-        company: "Tencent Cloud",
+        period: "2022 - 2023",
+        position: "Formation Web Designer / CDUI",
+        // company: "Tencent Cloud",
         description:
-          "Leading frontend development for EdgeOne platform and templates.",
+          "Apprentissage des bases de la conception d'interfaces utilisateur, du développement web, de la gestion de projet, de la programmation et PAO.",
       },
       {
-        period: "2020 - 2022",
-        position: "Frontend Developer",
-        company: "Tencent Cloud",
+        period: "2021 - 2022",
+        position: "Formation Infographiste / Metteur en page",
+        // company: "Tencent Cloud",
         description:
-          "Developed and maintained multiple web applications and tools.",
-      },
-      {
-        period: "2018 - 2020",
-        position: "Junior Developer",
-        company: "Tencent Cloud",
-        description: "Worked on various client projects and internal tools.",
+          "Apprentissage des bases de l'infographie, du métier de metteur en page, gestion de projet et PAO.",
       },
     ],
   },
   connect: {
-    title: "Let's Connect",
+    title: "Prendre contact",
     description:
-      "Feel free to reach out if you want to collaborate or just say hi! You can find us on social media or drop us an",
+      "N’hésitez pas à me contacter si vous souhaitez collaborer ou simplement dire bonjour ! Vous pouvez me retrouver sur les réseaux sociaux ou m’envoyer un",
     email: {
       text: "email",
       href: "mailto:364786053@qq.com",
@@ -92,26 +87,26 @@ export const projectsContent = {
     title: "Projects - Your Portfolio",
     description: "Showcase of my best work and projects",
   },
-  title: "Our Projects",
+  title: "Mes projets",
   description:
-    "Here you can showcase your best work. Each project should include a brief description, the technologies used, and any notable achievements. This helps potential clients or employers understand your capabilities.",
+    "Voici les projets que j’ai réalisés, représentatifs de mon travail en design et développement.",
   projects: [
     {
-      title: "Project One",
+      title: "Nom du projet",
       description:
         "A brief description of your first project. Explain what it does and what technologies you used.",
       image: "/assets/images/projects/project1.jpg",
       href: "#",
     },
     {
-      title: "Project Two",
+      title: "Nom du projet",
       description:
         "Describe your second project here. Highlight the key features and your role in development.",
       image: "/assets/images/projects/project2.jpg",
       href: "#",
     },
     {
-      title: "Project Three",
+      title: "Nom du projet",
       description:
         "Share details about your third project. What problems did it solve? What was the outcome?",
       image: "/assets/images/projects/project3.png",

@@ -12,6 +12,7 @@ import { aboutContent } from "../config/content.ts";
     <meta name="generator" content={Astro.generator} />
     <title>{aboutContent.meta.title}</title>
     <meta name="description" content={aboutContent.meta.description} />
+
     <script is:inline>
       (function () {
         const savedTheme = localStorage.getItem("theme") || "dark";
@@ -47,18 +48,37 @@ import { aboutContent } from "../config/content.ts";
           });
       });
     </script>
+
     <style>
+      /* Animation douce de la couleur sable (respiration) */
+      @keyframes sandGlowAbout {
+        0% {
+          --about-sand-color-1: #C49A6C45; /* sable foncé */
+          --about-sand-color-2: #F0B47345; /* sable plus clair doré */
+        }
+        50% {
+          --about-sand-color-1: #D8B58A45; /* sable éclairci */
+          --about-sand-color-2: #F6C58B45; /* doré plus lumineux */
+        }
+        100% {
+          --about-sand-color-1: #C49A6C45;
+          --about-sand-color-2: #F0B47345;
+        }
+      }
+
+      .about-sand-animated {
+        animation: sandGlowAbout 18s ease-in-out infinite;
+      }
+
       .dot-hexagon-light {
         background-image: radial-gradient(
             circle,
-            #80808045 1px,
+            var(--about-sand-color-1) 1px,
             transparent 1px
           ),
-          radial-gradient(circle, #80808045 1px, transparent 1px);
+          radial-gradient(circle, var(--about-sand-color-2) 1px, transparent 1px);
         background-size: 24px 41.57px;
-        background-position:
-          0 0,
-          12px 20.78px;
+        background-position: 0 0, 12px 20.78px;
       }
 
       .dot-hexagon-dark {
@@ -69,47 +89,64 @@ import { aboutContent } from "../config/content.ts";
           ),
           radial-gradient(circle, #ffffff35 1px, transparent 1px);
         background-size: 24px 41.57px;
-        background-position:
-          0 0,
-          12px 20.78px;
+        background-position: 0 0, 12px 20.78px;
+      }
+
+      /* Bordures sable clair pour les cartes */
+      .sand-card {
+        border: 1px solid #E0B482; /* sable clair */
+        border-radius: 1rem; /* ~ rounded-2xl */
+        background-color: rgba(255, 255, 255, 0.8);
+        box-shadow: 0 0 15px 20px rgba(0, 0, 0, 0.349);
+      }
+
+      .dark .sand-card {
+        background-color: rgba(23, 23, 23, 0.8);
+        border-color: #E0B482;
+        box-shadow: 0 0 15px 20px rgba(0, 0, 0, 0.459);
       }
     </style>
   </head>
+
   <body
     class="min-h-screen flex flex-col bg-white dark:bg-neutral-900 transition-colors duration-300"
   >
     <div class="relative flex-grow flex flex-col">
+      <!-- Fond global About -->
       <div class="absolute inset-0 z-0">
         <div
-          class="absolute inset-0 -z-10 dot-hexagon-light dark:dot-hexagon-dark"
-        >
-        </div>
+          class="absolute inset-0 -z-10 dot-hexagon-light dark:dot-hexagon-dark about-sand-animated"
+        ></div>
+
         <div
           class="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_50%,transparent_0%,rgba(255,255,255,0.5)_60%,rgba(255,255,255,0.9)_85%,white_100%)] dark:bg-[radial-gradient(ellipse_80%_80%_at_50%_50%,transparent_0%,rgba(23,23,23,0.5)_60%,rgba(23,23,23,0.9)_85%,rgb(23,23,23)_100%)] -z-10"
-        >
-        </div>
+        ></div>
+
         <div
           class="absolute left-0 right-0 top-0 -z-10 m-auto h-[1200px] w-[1200px] rounded-full bg-neutral-400 opacity-10 blur-[100px]"
-        >
-        </div>
+        ></div>
       </div>
 
       <Navigation />
-      <section class="relative z-20 w-[896px] mx-auto mt-24 mb-12">
-        <div class="relative z-20 w-full mx-auto lg:mx-0">
-          <h2
-            class="text-2xl font-bold tracking-tight text-neutral-900 dark:text-neutral-100 sm:text-3xl lg:text-4xl"
-          >
-            {aboutContent.title}
-          </h2>
-          <div class="flex flex-col md:flex-row gap-8 mt-3 sm:mt-4 lg:mt-6">
+
+      <section class="relative z-20 w-[896px] mx-auto mt-24 mb-12 space-y-12">
+        <!-- Carte intro + skills + image -->
+        <div class="sand-card shadow-lg overflow-hidden p-6 sm:p-8">
+          <div class="flex flex-col md:flex-row gap-8">
             <div class="w-full md:w-1/2 flex flex-col">
+              <h2
+                class="text-2xl font-bold tracking-tight text-neutral-900 dark:text-neutral-100 sm:text-3xl lg:text-4xl mb-3"
+              >
+                {aboutContent.title}
+              </h2>
+
               <p
                 class="text-sm leading-6 text-gray-600 dark:text-neutral-400 sm:leading-7 lg:leading-8 sm:text-base lg:text-lg"
               >
                 {aboutContent.description}
               </p>
-              <div class="mt-auto pt-4 flex flex-wrap gap-2">
+
+              <div class="mt-4 pt-4 flex flex-wrap gap-2 border-t border-neutral-200 dark:border-neutral-700">
                 {
                   aboutContent.skills.map((skill) => (
                     <span class="px-3 py-1 text-sm bg-neutral-200 dark:bg-neutral-700 text-neutral-700 dark:text-neutral-200 rounded-full">
@@ -119,31 +156,35 @@ import { aboutContent } from "../config/content.ts";
                 }
               </div>
             </div>
+
             <div class="w-full md:w-1/2 flex justify-end">
-              <div class="relative w-[360px] h-[360px]">
+              <div class="relative w-[320px] h-[320px] sm:w-[360px] sm:h-[360px] rounded-xl overflow-hidden">
                 <img
                   src={aboutContent.image.src}
                   alt={aboutContent.image.alt}
-                  class="object-cover rounded-xl w-full h-full"
+                  class="object-cover w-full h-full"
                 />
               </div>
             </div>
           </div>
         </div>
 
-        <div class="flex flex-col md:flex-row mt-20">
-          <div class="flex-1">
-            <h2 class="mb-2 text-2xl font-bold dark:text-neutral-200">
+        <!-- Carte expérience + carte contact à côté -->
+        <div class="flex flex-col md:flex-row gap-8">
+          <!-- Carte expérience -->
+          <div class="flex-1 sand-card shadow-lg overflow-hidden p-6 sm:p-8">
+            <h2 class="mb-4 text-2xl font-bold dark:text-neutral-200">
               {aboutContent.experience.title}
             </h2>
-            <div class="py-10">
+
+            <div class="py-2">
               {
                 aboutContent.experience.items.map((item) => (
-                  <div class="pb-10 border-l border-gray-200 last:border-l-0 dark:border-neutral-700">
+                  <div class="pb-8 border-l border-gray-200 last:border-l-0 dark:border-neutral-700">
                     <div class="relative flex flex-col justify-start pl-12">
-                      <div class="absolute top-0 left-0 z-40 flex items-center justify-center -translate-x-1/2 bg-white border rounded-full dark:bg-neutral-950 w-14 h-14 border-neutral-300 dark:border-neutral-700">
+                      <div class="absolute top-0 left-0 z-40 flex items-center justify-center -translate-x-1/2 bg-white border rounded-full dark:bg-neutral-950 w-12 h-12 border-neutral-300 dark:border-neutral-700">
                         <svg
-                          class="w-8 h-8 text-neutral-700 dark:text-neutral-300"
+                          class="w-7 h-7 text-neutral-700 dark:text-neutral-300"
                           fill="none"
                           viewBox="0 0 24 24"
                           stroke="currentColor"
@@ -156,6 +197,7 @@ import { aboutContent } from "../config/content.ts";
                           />
                         </svg>
                       </div>
+
                       <p class="text-xs uppercase text-neutral-400 dark:text-neutral-500 tracking-widest">
                         {item.period}
                       </p>
@@ -175,24 +217,24 @@ import { aboutContent } from "../config/content.ts";
             </div>
           </div>
 
-          <div class="w-[360px] ml-8">
-            <h2 class="mb-2 text-2xl font-bold dark:text-neutral-200">
+          <!-- Carte contact -->
+          <div class="w-full md:w-[360px] sand-card shadow-lg overflow-hidden p-6 sm:p-8">
+            <h2 class="mb-4 text-2xl font-bold dark:text-neutral-200">
               {aboutContent.connect.title}
             </h2>
-            <div class="py-[30px]">
-              <p
-                class="text-sm leading-6 text-gray-600 dark:text-neutral-400 sm:leading-7 lg:leading-8 sm:text-base lg:text-lg"
+
+            <p
+              class="text-sm leading-6 text-gray-600 dark:text-neutral-400 sm:leading-7 lg:leading-8 sm:text-base lg:text-lg"
+            >
+              {aboutContent.connect.description}
+              <a
+                href={aboutContent.connect.email.href}
+                class="font-semibold text-[#C49A6C] hover:text-[#A97F55] dark:text-[#E0B482] dark:hover:text-[#C49A6C] no-underline"
               >
-                {aboutContent.connect.description}
-                <a
-                  href={aboutContent.connect.email.href}
-                  class="text-indigo-600 underline"
-                >
-                  {aboutContent.connect.email.text}
-                </a>
-                .
-              </p>
-            </div>
+                {aboutContent.connect.email.text}
+              </a>
+              .
+            </p>
           </div>
         </div>
       </section>

@@ -1,124 +1,111 @@
-# Multiple Page Portfolio
+Portfolio – Xavier L.
+Multi-page portfolio (Home, About, Projects, Blog) built with Astro and Tailwind CSS, featuring a light/dark theme, sand‑toned animated “particles” background, card‑based layout, and a structure designed to be fast, readable, and easy to maintain.
 
-A modern, responsive portfolio website built with Astro, featuring multiple pages including a blog system, projects showcase, and about page.
+The public site targeted by the Astro configuration is https://… (fill in your actual deployment URL: Vercel, Netlify, etc.).
 
-## Quick Deploy
+What this project includes
+Pages & content
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/tomcomtang/astro-multiplepage-portfolio&project-name=astro-multiplepage-portfolio&repository-name=astro-multiplepage-portfolio)
+Standalone pages: index.astro (home), about.astro, projects.astro, blog.astro.
 
-## Preview
+Centralized content in src/config/content.ts: texts, titles, descriptions, links (about, projects, blog, social, email).
 
-You can preview the project online at:
+Optional blog via src/content/posts/ (Markdown) if you want to publish articles.
 
-<https://astro-multiplepage-portfolio-blush.vercel.app/>
+UI & design system
 
-## Features
+Astro rendering + Tailwind CSS utilities for layout (flex, grid), typography, and responsive design.
 
-- 🎨 Modern and clean design with dark/light mode support
-- 📱 Fully responsive layout
-- 📝 Blog system with Markdown support
-- 🚀 Project showcase
-- 🔍 Pagination for blog posts
-- 🎯 SEO optimized
-- 🌙 Dark/Light theme toggle
-- 📦 Static site generation
+Light/dark theme handled via dark: variants and inline scripts that apply the user’s preference on load (using localStorage) to avoid theme “flash”.
 
-## Tech Stack
+Professional portfolio look: neutral typography, warm sand tones, structured content blocks, and CTAs pointing to key sections.
 
-- **Framework**: Astro 5.x
-- **Styling**: Tailwind CSS
-- **Content**: Markdown with Astro Content Collections
-- **Syntax Highlighting**: Tailwind Typography plugin
-- **Language**: TypeScript
-- **Build Tool**: Vite
+Background & animations
 
-## Getting Started
+Global background: hexagonal dot pattern (.dot-hexagon-light / .dot-hexagon-dark) in sand and golden tones (#C49A6C, #F0B473) + radial glow + circular halo.
 
-1. Clone the repository:
+“Particles” effect: subtle background translation (@keyframes particlesDrift via .particles-layer) to create motion without impacting readability.
 
-```bash
-git clone https://github.com/tomcomtang/astro-multiplepage-portfolio.git
-```
+Optional sand color breathing animation via CSS (sandGlow…) on key pages (home, about) for a soft light variation.
 
-2. Install dependencies:
+SEO & accessibility
 
-```bash
-npm install
-```
+Page titles & descriptions via aboutContent.meta, projectsContent.meta, etc.
 
-3. Run the development server:
+Clean heading structure (h1/h2) to improve accessibility and basic SEO.
 
-```bash
-npm run dev
-```
+Static site generation with Astro (SSG) for fast, easily indexable pages.
 
-4. Build for production:
+How it “communicates” (architecture)
+Multi-page routing (Astro)
+Entry points: users arrive on /, /about, /projects, /blog.
 
-```bash
-npm run build
-```
+Astro manages each page via src/pages/*.astro.
 
-## Project Structure
+Text and metadata are injected from src/config/content.ts so you don’t duplicate copy inside templates.
 
-```
-├── src/
-│   ├── components/         # Reusable components
-│   ├── config/            # Configuration files
-│   ├── content/           # Markdown blog posts
-│   └── pages/             # Astro pages
-└── public/                # Static assets
-```
+Global navigation (Navigation.astro) connects all pages and is included in each layout.
 
-## Content Management
+Astro server rendering → shared layout
 
-### Blog Posts
+Each page layout (e.g. index.astro, about.astro) is responsible for:
 
-1. Create your markdown files in `src/content/posts/` directory
-2. Each markdown file should follow this format:
+Meta tags (<title>, <meta name="description">) based on siteConfig / aboutContent.meta / projectsContent.meta.
 
-```markdown
----
-title: Your Post Title
-description: A brief description of your post
-date: 2024-03-21
-readTime: 5 min
----
+Injecting the animated background (hexagons + radial glow + halo) via <style> blocks and div.absolute.inset-0 wrappers.
 
-Your post content here...
-```
+Rendering the top navigation (Navigation) and bottom footer (Footer) to ensure visual consistency across pages.
 
-### Page Content
+Client-side orchestration (theme & interactions)
 
-You can customize the content of different pages by modifying `src/config/content.ts`:
+Inline scripts in the <head> sections:
 
-- Site metadata and social links
-- Home page content
-- About page content
-- Projects showcase
+Theme preferences: read localStorage.getItem("theme") (dark, light, system) and apply the dark class to <html> or <body> early in the render pipeline.
 
-## Blog System
+Reacting to prefers-color-scheme: listen to window.matchMedia("(prefers-color-scheme: dark)") when the theme is set to system, so the UI adapts to OS changes.
 
-The blog system supports:
+Client-side interactions:
 
-- Markdown content
-- Code syntax highlighting
-- Reading time estimation
-- Pagination
+Project cards hover: subtle translation, hover effect on the link icon, border/background accent on hover.
 
-## Customization
+Home hero image: floatLoop animation for a gentle floating effect plus a stronger hover transform.
 
-1. Add new blog posts by creating Markdown files in the `src/content/posts` directory
-2. Update project information in `src/config/content.ts`
-3. Modify site configuration in `src/config/content.ts`
+“Content ↔ pages” contract (stable mapping)
 
-## License
+The mapping between pages and their content/config is centralized in src/config/content.ts:
 
-MIT
+homeContent: title, hero text, call-to-action button, light/dark hero images.
 
-## Author
+aboutContent: meta, title, description, skills, experience timeline, contact block (email).
 
-tomcomtang
+projectsContent: meta, title, description, project list (title, description, image, href).
 
-## About
+blogContent: meta, blog page texts, pagination configuration.
 
-A personal blog theme template that includes automatic recognition of Markdown content and generates configuration accordingly.
+This contract is used by:
+
+Astro pages (index.astro, about.astro, projects.astro, blog.astro) to fetch data without duplicating it.
+
+Navigation components to display the correct labels.
+
+UI components to keep a stable structure even when content changes.
+
+Key directories
+src/pages/: main pages (index.astro, about.astro, projects.astro, blog.astro).
+
+src/components/: UI components (Navigation, Footer, shared sections).
+
+src/config/content.ts: site, home, about, projects, blog configuration.
+
+src/content/posts/: Markdown blog posts (if the blog system is enabled).
+
+public/: static assets (images, favicon, etc.).
+
+Tech stack
+Astro: rendering & build (astro.config.mjs), multi‑route pages.
+
+Tailwind CSS v4: layout utilities, typography, responsive design, dark: theme variant.
+
+TypeScript: client scripts and configuration.
+
+Markdown + Astro Content Collections: blog system (posts, pagination, metadata).
